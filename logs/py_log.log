@@ -1,0 +1,11 @@
+2024-10-13 17:40:56,867 root        : DEBUG 
+2024-10-13 17:40:56,899 werkzeug    : INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8099
+2024-10-13 17:40:56,899 werkzeug    : INFO [33mPress CTRL+C to quit[0m
+2024-10-13 17:40:56,901 werkzeug    : INFO  * Restarting with stat
+2024-10-13 17:40:57,178 root        : DEBUG 
+2024-10-13 17:40:57,191 werkzeug    : WARNING  * Debugger is active!
+2024-10-13 17:40:57,191 werkzeug    : INFO  * Debugger PIN: 142-764-916
+2024-10-13 17:40:58,572 werkzeug    : INFO 127.0.0.1 - - [13/Oct/2024 17:40:58] "POST /buy HTTP/1.1" 200 -
+2024-10-13 17:41:00,577 werkzeug    : INFO 127.0.0.1 - - [13/Oct/2024 17:41:00] "POST /buy HTTP/1.1" 200 -
+2024-10-13 17:41:03,233 werkzeug    : INFO 127.0.0.1 - - [13/Oct/2024 17:41:03] "[33mGET /metrics HTTP/1.1[0m" 404 -
