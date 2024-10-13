@@ -1,32 +1,29 @@
 import os
-import time
 import uuid
-from cgitb import handler
 from datetime import datetime
-
 
 import flask
 from flask import request
 import json
-import shutil
 import logging
 
 from logging.config import fileConfig
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 app = flask.Flask(__name__)
 
-# hand = logging.handlers.RotatingFileHandler("logs/py_logs.log", maxBytes=2000, backupCount=10)
-#
-# logging.basicConfig(handlers=hand, level=logging.INFO, filename="logs/py_logs.log",  filemode="a", format = "%(asctime)s - %(levelname)s - %(funcName)s: %(lineno)d - %(message)s")
-#
+
+
+from prometheus_flask_exporter import PrometheusMetrics
+
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Application info', version='1.0.3')
+
 
 def create_rotating_log():
-    fileConfig('logging_config.ini')
+    fileConfig('../logging_config.ini')
     logger = logging.getLogger()
     logger.debug('')
-
 
 
 @app.route('/', methods=['GET'])
@@ -35,6 +32,7 @@ def main():
 
 
 @app.route('/buy', methods=['POST', 'GET'])
+@metrics.gauge('in_progress', 'Long running requests in progress')
 def service():
     if request.method == 'POST':
         now = datetime.now()
@@ -54,3 +52,10 @@ if __name__ == '__main__':
     create_rotating_log()
     app.debug = True
     app.run(port=8099)
+
+metrics.register_default(
+    metrics.counter(
+        'by_path_counter', 'Request count by request paths',
+        labels={'path': lambda: request.path}
+    )
+)
